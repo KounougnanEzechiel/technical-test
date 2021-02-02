@@ -100,6 +100,8 @@ class CustomerController extends AbstractController
      * @return RedirectResponse
      */
     public function delete(Customer $customer): RedirectResponse {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         $this->entityManager->remove($customer);
         $this->entityManager->flush();
 

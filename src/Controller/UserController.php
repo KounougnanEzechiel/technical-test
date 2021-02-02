@@ -60,11 +60,12 @@ class UserController extends AbstractController
      * @return Response
      */
     public function add(Request $request): Response {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         $user = new User();
 
         $form = $this->createForm(UserType::class, $user);
         $form->add('password', TextType::class);
-        
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
@@ -72,6 +73,7 @@ class UserController extends AbstractController
             $user->setPassword(
                 $this->userPasswordEncoder->encodePassword($user, $user->getPassword() ),
             );
+
             $this->entityManager->persist($user);
             $this->entityManager->flush();
 
@@ -92,6 +94,8 @@ class UserController extends AbstractController
      * @return Response
      */
     public function edit(Request $request, User $user): Response {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
@@ -114,6 +118,8 @@ class UserController extends AbstractController
      * @return RedirectResponse
      */
     public function delete(User $user): RedirectResponse {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         $this->entityManager->remove($user);
         $this->entityManager->flush();
 
