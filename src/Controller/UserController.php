@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * Class UserController
@@ -26,13 +27,16 @@ class UserController extends AbstractController
 {
     private UserRepository $userRepository;
     private EntityManagerInterface $entityManager;
+    private UserPasswordEncoderInterface $userPasswordEncoder;
 
     public function __construct(
         UserRepository $userRepository,
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
+        UserPasswordEncoderInterface $userPasswordEncoder
     ) {
         $this->userRepository = $userRepository;
         $this->entityManager = $entityManager;
+        $this->userPasswordEncoder = $userPasswordEncoder;
     }
 
     /**
@@ -57,16 +61,17 @@ class UserController extends AbstractController
      */
     public function add(Request $request): Response {
         $user = new User();
-        $user->setPassword(md5(time()));
 
         $form = $this->createForm(UserType::class, $user);
-        $form->add('password', TextType::class, [
-            'disabled' => true
-        ]);
-
+        $form->add('password', TextType::class);
+        
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
+            $user->setRoles(['ROLE_USER']);
+            $user->setPassword(
+                $this->userPasswordEncoder->encodePassword($user, $user->getPassword() ),
+            );
             $this->entityManager->persist($user);
             $this->entityManager->flush();
 
