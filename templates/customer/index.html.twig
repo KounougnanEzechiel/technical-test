@@ -32,9 +32,11 @@
                             <a href="{{ path('customer_edit', {'customer': customer.id}) }}" class="text-muted">
                                 <i class="fas fa-edit"></i>
                             </a>
-                            <a href="{{ path('customer_delete', {'customer': customer.id}) }}" class="text-muted">
-                                <i class="fas fa-trash"></i>
-                            </a>
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <a href="{{ path('customer_delete', {'customer': customer.id}) }}" class="text-muted">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                {% endif %}
                         </td>
                     </tr>
                 {% else %}

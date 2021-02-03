@@ -120,7 +120,7 @@ class UserController extends AbstractController
     public function changePassword(Request $request): Response {
         $user = $this->getUser();
         $form = $this->createForm(UserType::class, $user);
-        $form->add('oldPassword', TextType::class,['mapped' => false]);
+        $form->add('oldPassword', TextType::class,['mapped' => false,'required'   => true]);
         $form->add('newPassword', TextType::class,['mapped' => false]);
         $form->handleRequest($request);
 

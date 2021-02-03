@@ -17,9 +17,11 @@
                     <th>Name</th>
                     <th class="text-center">Tasks</th>
                     <th class="text-right">
-                        <a href="{{ path('user_add') }}" class="text-muted">
-                            <i class="fas fa-plus"></i>
-                        </a>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <a href="{{ path('user_add') }}" class="text-muted">
+                                <i class="fas fa-plus"></i>
+                            </a>
+                        {% endif %}      
                     </th>
                 </tr>
             </thead>
@@ -29,12 +31,14 @@
                         <td>{{ user }}</td>
                         <td class="text-center">{{ user.tasks.count }}</td>
                         <td class="text-right">
-                            <a href="{{ path('user_edit', {'user': user.id}) }}" class="text-muted">
-                                <i class="fas fa-edit"></i>
-                            </a>
-                            <a href="{{ path('user_delete', {'user': user.id}) }}" class="text-muted">
-                                <i class="fas fa-trash"></i>
-                            </a>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a href="{{ path('user_edit', {'user': user.id}) }}" class="text-muted">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="{{ path('user_delete', {'user': user.id}) }}" class="text-muted">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            {% endif %}    
                         </td>
                     </tr>
                 {% else %}
