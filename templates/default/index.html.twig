@@ -14,27 +14,41 @@
         <div class="row row-cards">
             <div class="col-sm-4">
                 <div class="card">
-                    <div class="card-body p-2 text-center">
-                        <div class="h1 mt-2 mb-0">{{ stats.opened }}</div>
-                        <div class="text-muted mb-3">Opened tasks <i class="fas fa-inbox"></i></div>
-                        
-                    </div>
+                    <a class="nav-link" href="{{ path('task') }}">
+                        <div class="card-body p-2 text-center">
+                            <div class="h1 mt-2 mb-0">{{ stats.opened }}</div>
+                            <div class="text-muted mb-3"> 
+                            Opened tasks 
+                            <i class="fas fa-inbox"></i>
+                            </div>
+                        </div>
+                    </a>
                 </div>
             </div>
             <div class="col-sm-4">
                 <div class="card">
-                    <div class="card-body p-2 text-center">
-                        <div class="h1 mt-2 mb-0">{{ stats.unassigned }}</div>
-                        <div class="text-muted mb-3">Unassigned tasks <i class="fas fa-user-times"></i></div>
-                    </div>
+                    <a class="nav-link" href="{{ path('task') }}">
+                        <div class="card-body p-2 text-center">
+                            <div class="h1 mt-2 mb-0">{{ stats.unassigned }}</div>
+                            <div class="text-muted mb-3">
+                            Unassigned tasks 
+                            <i class="fas fa-user-times"></i>
+                            </div>
+                        </div>
+                    </a>
                 </div>
             </div>
             <div class="col-sm-4">
                 <div class="card">
-                    <div class="card-body p-2 text-center">
-                        <div class="h1 mt-2 mb-0">{{ stats.owned }}</div>
-                        <div class="text-muted mb-3">Owned opened tasks <i class="fas fa-user"></i></div>
-                    </div>
+                    <a class="nav-link" href="{{ path('task') }}">
+                        <div class="card-body p-2 text-center">
+                            <div class="h1 mt-2 mb-0">{{ stats.owned }}</div>
+                            <div class="text-muted mb-3">
+                            Owned opened tasks 
+                            <i class="fas fa-user"></i>
+                            </div>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
