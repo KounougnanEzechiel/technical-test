@@ -113,6 +113,38 @@ class UserController extends AbstractController
     }
 
     /**
+     * @Route("/changePassword", name="changePassword")
+     * @param Request $request
+     * @return Response
+     */
+    public function changePassword(Request $request): Response {
+        $user = $this->getUser();
+        $form = $this->createForm(UserType::class, $user);
+        $form->add('oldPassword', TextType::class,['mapped' => false]);
+        $form->add('newPassword', TextType::class,['mapped' => false]);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid() && $this->userPasswordEncoder->isPasswordValid($user, $form->get('oldPassword')->getData())) {
+            $user->setPassword(
+                $this->userPasswordEncoder->encodePassword($user, $form->get('newPassword')->getData()),
+            );
+
+            $this->entityManager->flush();
+            $this->addFlash('success', "Your password has been updated.");
+            return $this->redirectToRoute('user');
+        }
+        elseif ($form->isSubmitted() && $form->isValid() && !$this->userPasswordEncoder->isPasswordValid($user, $form->get('oldPassword')->getData())) {
+            $this->addFlash('danger', "The old password is invalid");
+
+        }
+
+        return $this->render('user/changepassword.html.twig', [
+            'form' => $form->createView(),
+            'user' => $user
+        ]);
+    }
+
+    /**
      * @Route("/delete/{user}", name="user_delete")
      * @param User $user
      * @return RedirectResponse
