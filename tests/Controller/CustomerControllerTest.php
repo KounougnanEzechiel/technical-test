@@ -34,8 +34,12 @@ class CustomerControllerTest extends WebTestCase
 
         $counts['start'] = static::$container->get(CustomerRepository::class)->count([]);
 
-        $crawler = $client->request('GET', '/customer/add');
+        $user = static::$container->get(UserRepository::class)->findOneByEmail('thibault@fidcar.com');
 
+        $client->loginUser($user);
+
+        $crawler = $client->request('GET', '/customer/add');
+        
         $submit = $crawler->selectButton('Save');
         $form = $submit->form();
 
