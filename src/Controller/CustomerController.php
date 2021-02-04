@@ -8,6 +8,7 @@ use App\Entity\Customer;
 use App\Form\CustomerType;
 use App\Repository\CustomerRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,6 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * Class CustomerController
  * @package App\Controller
  * @Route("/customer")
+ * @IsGranted("IS_AUTHENTICATED_FULLY")
  */
 class CustomerController extends AbstractController
 {
