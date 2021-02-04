@@ -5,7 +5,7 @@
 Hello there !
 
 If you are here, there is a lot of chance that you passed an interview with Fanny and it went well.
-You are here to show is what you are capable of !
+You're now here to show what you're capable of !
 **This test will show us your capacity to read unknown code, react to bugs, work in team, understand the purpose of a project and show your vision of a proper user experience.**
 
 ## The App
