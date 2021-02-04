@@ -31,8 +31,14 @@
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown"
                            aria-label="Open user menu">
-                            <div class="ps-2">
-                                <div>{{ app.user.firstname }} {{ app.user.lastname }}</div>
+                            <div class="ps-2 text-center">
+                                <div>
+                                {% if is_granted('ROLE_ADMIN') %}
+                                <span class="avatar avatar-xs bg-azure-lt">A</span>
+                                {% elseif is_granted('ROLE_USER') %}
+                                <span class="avatar avatar-xs bg-green-lt">U</span>
+                                {% endif %} {{ app.user.firstname }} {{ app.user.lastname }}
+                                </div>
                             </div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">

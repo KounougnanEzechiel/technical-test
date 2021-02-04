@@ -1,57 +1,68 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="page-header d-print-none">
-        <div class="row align-items-center">
-            <div class="col">
-                <h2 class="page-title">
-                    Users
-                </h2>
-            </div>
-        </div>
+  <div class="page-header d-print-none">
+    <div class="row align-items-center">
+      <div class="col">
+        <h2 class="page-title">
+          Users
+        </h2>
+      </div>
     </div>
-    <div class="card">
-        <table class="table mb-0">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th class="text-center">Tasks</th>
-                    <th class="text-right">
-                        {% if is_granted('ROLE_ADMIN') %}
-                            <a href="{{ path('user_add') }}" class="text-muted">
-                                <i class="fas fa-plus"></i>
-                            </a>
-                        {% endif %}      
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for user in users %}
-                    <tr>
-                        <td>{{ user }}</td>
-                        <td class="text-center">{{ user.tasks.count }}</td>
-                        <td class="text-right">
-                            {% if is_granted('ROLE_ADMIN') %}
-                                <a href="{{ path('user_edit', {'user': user.id}) }}" class="text-muted">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <a href="{{ path('user_delete', {'user': user.id}) }}" class="text-muted">
-                                    <i class="fas fa-trash"></i>
-                                </a>
-                            {% endif %}    
-                        </td>
-                    </tr>
-                {% else %}
-                    <tr>
-                        <td colspan="2" class="text-center">
-                            <em>No user found</em>
-                        </td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <div class="card-footer pb-0">
-            {{ pagination(users) }}
+  </div>
+  <div class="content">
+    <div class="row row-cards">
+      {% if is_granted('ROLE_ADMIN') %}
+        <div class="col-md-6 col-lg-3">
+            
+                <div class="card-body p-4 text-center">
+                    <a href="{{ path('user_add') }}">
+                    <span class="avatar avatar-xl mb-3 avatar-rounded bg-cyan-lt">+</span>
+                    </a>
+                    <h3 class="m-0 mb-1">
+                    Add User
+                    </h3>
+                </div>
+            
         </div>
+      {% endif %}
+      {% for user in users %}
+        <div class="col-md-6 col-lg-3">
+            <div class="card">
+                <div class="card-body p-4 text-center">
+                    <span class="avatar avatar-xl mb-3 avatar-rounded">U</span>
+                    <h3 class="m-0 mb-1">
+                    {{ user }}
+                    </h3>
+                    <div class="text-muted">
+                    Tasks : {{ user.tasks.count }}
+                    </div>
+                    <div class="mt-3">
+                    <span class="badge bg-purple-lt"></span>
+                    </div>
+                </div>
+                    <div class="d-flex">
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('user_edit', { user: user.id} ) }}"class="card-btn col-sm border"><i class="fas fa-edit"></i>
+                        Edit
+                        </a>
+                        <a href="{{ path('user_delete',{user: user.id})}}" class="card-btn col-sm border"><i class="fas fa-trash"></i>
+                        Delete
+                        </a>
+                    {% endif %}
+                    </div>
+                
+            </div>    
+        </div>
+      {% else %}
+        <h2 colspan="2" class="text-center">
+          No user found
+        </h2>
+      {% endfor %}
+
+      <div class="card-footer pb-0">
+        {{ pagination(users) }}
+      </div>
     </div>
+  </div>
 {% endblock %}
